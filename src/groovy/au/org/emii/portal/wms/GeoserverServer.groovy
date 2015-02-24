@@ -167,6 +167,6 @@ class GeoserverServer extends WmsServer {
     }
 
     static Boolean _filterHasValues(filterType, visualised) {
-        return visualised && filterType != "BoundingBox" && filterType != "Date"
+        return visualised && filterType != "BoundingBox" && filterType != "Date" && filterType != "Boolean"
     }
 }
