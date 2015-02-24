@@ -83,6 +83,24 @@ class GeoserverServerTests extends GrailsUnitTestCase {
         assertEquals expected, filterValues
     }
 
+    void testEmptyFilterValues() {
+
+        def filterValuesXmlWithEmptyValue =
+"""<?xml version="1.0"?>
+<uniqueValues>
+  <value></value>
+  <value>test</value>
+</uniqueValues>"""
+
+        geoserverServer.metaClass._getFilterValuesXml = { server, layer, filter -> return filterValuesXmlWithEmptyValue }
+
+        def expected = [ "test" ]
+
+        def filterValues = geoserverServer.getFilterValues("http://server", "layer", "some_filter")
+
+        assertEquals expected, filterValues
+    }
+
     void testValidFilters() {
         geoserverServer.metaClass._getFiltersXml = { server, layer -> return validGeoserverResponse }
         geoserverServer.metaClass._getFilterValuesXml = { server, layer, filter ->

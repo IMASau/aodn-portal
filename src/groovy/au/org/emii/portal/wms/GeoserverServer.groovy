@@ -87,7 +87,7 @@ class GeoserverServer extends WmsServer {
             def xml = new XmlSlurper().parseText(_getFilterValuesXml(server, layer, filter))
 
             if (xml.value.size() > 0) {
-                values = xml.value.collect() { it -> it.text() }
+                values = xml.value.findAll({ ! it.text().isEmpty() }).collect() { it -> it.text() }
             }
         }
         catch (e) {
