@@ -115,12 +115,16 @@ Portal.filter.FilterGroupPanel = Ext.extend(Ext.Container, {
             }
             else {
                 this.layerIsBeingHandled = true;
+                var filterLayer = this.layer.wmsName;
+                if (this.layer.getDownloadLayer) {
+                    filterLayer = this.layer.getDownloadLayer();
+                }
 
                 Ext.Ajax.request({
                     url: this.GET_FILTER,
                     params: {
                         server: this.layer.server.uri,
-                        layer: this.layer.wmsName
+                        layer: filterLayer
                     },
                     scope: this,
                     failure: function() {
@@ -367,16 +371,16 @@ Portal.filter.FilterGroupPanel = Ext.extend(Ext.Container, {
     _layerShouldBeHandled: function() {
         return !(this.layerIsBeingHandled || this._layerHasBeenHandled());
     },
-    
+
     _isDisplayed: function() {
         var foundHiddenParent = false;
-        
+
         this.bubble(function() {
             if (this.isVisible && !this.isVisible()) {
                 foundHiddenParent = true;
             }
         });
-        
+
         return !foundHiddenParent;
     }
 });
