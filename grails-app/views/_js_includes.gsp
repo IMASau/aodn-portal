@@ -98,7 +98,6 @@
     <script type="text/javascript" src="${resource(dir: 'js/portal/details', file: 'TimeComboBox.js')}"></script>
     <script type="text/javascript" src="${resource(dir: 'js/portal/filter', file: 'BaseFilterPanel.js')}"></script>
     <script type="text/javascript" src="${resource(dir: 'js/portal/filter', file: 'ComboFilterPanel.js')}"></script>
-    <script type="text/javascript" src="${resource(dir: 'js/portal/filter', file: 'ConfigPage.js')}"></script>
     <script type="text/javascript" src="${resource(dir: 'js/portal/filter', file: 'ResettableDate.js')}"></script>
     <script type="text/javascript" src="${resource(dir: 'js/portal/filter', file: 'DateFilterPanel.js')}"></script>
     <script type="text/javascript" src="${resource(dir: 'js/portal/filter', file: 'BoundingBoxFilterPanel.js')}"></script>
