@@ -12,6 +12,7 @@ Portal.cart.DownloadPanel = Ext.extend(Ext.Panel, {
 
         Ext.apply(this, cfg);
         Portal.cart.DownloadPanel.superclass.constructor.call(this, arguments);
+        
     },
 
     initComponent: function(cfg) {
@@ -29,9 +30,22 @@ Portal.cart.DownloadPanel = Ext.extend(Ext.Panel, {
         Portal.cart.DownloadPanel.superclass.initComponent.call(this, arguments);
         this._registerEvents();
     },
+    
+    _registerNcWmsTemporalExtentLoadedEvent: function(geoNetworkRecord) {
+
+        var layer = geoNetworkRecord.data['wmsLayer'];
+        if (layer.isNcwms()){
+            layer.events.on('temporalextentloaded', function() { this.generateContent() }, this);
+        }
+    },
 
     _registerEvents: function() {
         this.on('beforeshow', function() { this.generateContent() }, this);
+        
+        Ext.MsgBus.subscribe(PORTAL_EVENTS.ACTIVE_GEONETWORK_RECORD_ADDED, function(event, geoNetworkRecord) {
+            this._registerNcWmsTemporalExtentLoadedEvent(geoNetworkRecord);
+        }, this);
+        
         Ext.MsgBus.subscribe(PORTAL_EVENTS.ACTIVE_GEONETWORK_RECORD_ADDED, this.generateContent, this);
         Ext.MsgBus.subscribe(PORTAL_EVENTS.ACTIVE_GEONETWORK_RECORD_REMOVED, this.generateContent, this);
     },
