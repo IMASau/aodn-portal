@@ -8,11 +8,14 @@
 describe("Portal.cart.DownloadPanel", function() {
 
     var downloadPanel;
+    var geoNetworkRecord;
 
     beforeEach(function() {
         downloadPanel = new Portal.cart.DownloadPanel({
             downloadPanelBody: new Portal.cart.DownloadPanelBody()
         });
+
+        geoNetworkRecord = {};
 
         spyOn(downloadPanel.downloadPanelBody, 'generateBodyContent');
     });
@@ -29,9 +32,11 @@ describe("Portal.cart.DownloadPanel", function() {
         });
 
         it('listens for ACTIVE_GEONETWORK_RECORD_ADDED event', function() {
-            Ext.MsgBus.publish(PORTAL_EVENTS.ACTIVE_GEONETWORK_RECORD_ADDED);
+            spyOn(downloadPanel,"_registerNcWmsTemporalExtentLoadedEvent");
+            Ext.MsgBus.publish(PORTAL_EVENTS.ACTIVE_GEONETWORK_RECORD_ADDED, geoNetworkRecord);
 
             expect(downloadPanel.downloadPanelBody.generateBodyContent).toHaveBeenCalled();
+            expect(downloadPanel._registerNcWmsTemporalExtentLoadedEvent).toHaveBeenCalled();
         });
 
         it('listens for ACTIVE_GEONETWORK_RECORD_REMOVED event', function() {
