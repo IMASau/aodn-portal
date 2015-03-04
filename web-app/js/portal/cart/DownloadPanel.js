@@ -35,7 +35,10 @@ Portal.cart.DownloadPanel = Ext.extend(Ext.Panel, {
 
         var layer = geoNetworkRecord.data['wmsLayer'];
         if (layer.isNcwms()){
-            layer.events.on('temporalextentloaded', function() { this.generateContent() }, this);
+            layer.events.on({
+                'temporalextentloaded': this.generateContent,
+                scope: this
+            });
         }
     },
 
@@ -50,7 +53,7 @@ Portal.cart.DownloadPanel = Ext.extend(Ext.Panel, {
         Ext.MsgBus.subscribe(PORTAL_EVENTS.ACTIVE_GEONETWORK_RECORD_REMOVED, this.generateContent, this);
     },
 
-    generateContent: function() {
+    generateContent: function(status) {
         this.downloadPanelBody.generateBodyContent();
     }
 });
