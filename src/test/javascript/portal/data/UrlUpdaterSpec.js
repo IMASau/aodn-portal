@@ -15,7 +15,6 @@ describe("Portal.data.UrlUpdater", function() {
         spyOn(Portal.data.ActiveGeoNetworkRecordStore.instance(), 'getUuids').andCallFake(function() {
             return uuids;
         });
-        spyOn(window.history, 'pushState');
     });
 
     describe('geonetwork record store events', function() {
